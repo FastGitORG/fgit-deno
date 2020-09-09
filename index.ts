@@ -1,18 +1,11 @@
-import { run } from './utils.ts'
+import { run, replace } from './utils.ts'
+import { isUrl } from './deps.ts'
 
 const { args } = Deno
 
-const repoRegex = /github\.com(\/.+\/[^\/]+)/
-const relRegex = /github\.com(\/.+\/.+\/releases\/download\/.+)/
-const ghMirror = 'hub.fastgit.org'
-const dlMirror = 'download.fastgit.org'
-
-if (args[0] === 'dl') {
-  const replaced = args[1].replace(relRegex, `${dlMirror}$1`)
-
-  run(['curl', '-OL', replaced])
+if (isUrl(args[0])) {
+  const _args = args.length > 1 ? args.slice(1) : ['-OL']
+  run(['curl', replace(args[0]), ..._args])
 } else {
-  const replaced = args.map((arg) => arg.replace(repoRegex, `${ghMirror}$1`))
-
-  run(['git', ...replaced])
+  run(['git', ...args.map(replace)])
 }
