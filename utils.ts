@@ -29,22 +29,28 @@ export const replace = (raw: string) => {
   const path = pathname.split('/')
   const type = path[3]
 
-  if (hostname === GITHUB) {
-    if (type === 'archive') {
-      url.hostname = FASTGIT_ARCHIVE
-    } else if (type === 'releases') {
-      url.hostname = FASTGIT_RELEASES
-    } else {
-      url.hostname = FASTGIT
-    }
-  } else if (hostname === GITHUB_ARCHIVE) {
-    path[3] = 'archive'
-    path[4] += '.zip'
+  switch (hostname) {
+    case GITHUB:
+      switch (type) {
+        case 'archive':
+          url.hostname = FASTGIT_ARCHIVE
+          break
+        case 'releases':
+          url.hostname = FASTGIT_RELEASES
+          break
+        default:
+          url.hostname = FASTGIT
+      }
+      break
+    case GITHUB_ARCHIVE:
+      path[3] = 'archive'
+      path[4] += '.zip'
 
-    url.hostname = FASTGIT_ARCHIVE
-    url.pathname = path.join('/')
-  } else if (hostname === GITHUB_RAW) {
-    url.hostname = FASTGIT_RAW
+      url.hostname = FASTGIT_ARCHIVE
+      url.pathname = path.join('/')
+      break
+    case GITHUB_RAW:
+      url.hostname = FASTGIT_RAW
   }
 
   return url.toString()

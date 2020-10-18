@@ -37,6 +37,11 @@ Deno.test('Releases', () => {
   )
 })
 
+Deno.test('Other GitHub Domain', () => {
+  const url = 'https://education.github.com/'
+  assertEquals(replace(url), url)
+})
+
 Deno.test('Not URL', () => {
   assertEquals(replace('foo'), 'foo')
 })
