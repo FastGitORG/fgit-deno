@@ -1,19 +1,33 @@
 # FastGit Deno
 
-Deno scripts for FastGit.
+[Deno](https://deno.land/) script for replacing GitHub URLs with FastGit counterparts.
+
+## Installation
+
+1. Make sure `$HOME/.deno/bin` (or `$DENO_INSTALL_ROOT/bin`, see [Deno docs](https://deno.land/manual/tools/script_installer)) is in your `$PATH`.
+2. `deno install -n fgit https://raw.fastgit.org/FastGitORG/fgit-deno/master/index.ts`
 
 ## Usage
 
-1. Make sure `$HOME/.deno/bin` (or `$DENO_INSTALL_ROOT/bin`, see [Deno documentaion](https://deno.land/manual/tools/script_installer)) is in your `$PATH`.
-2. Install with `deno install --allow-run -n fgit https://raw.fastgit.org/FastGitORG/fgit-deno/master/index.ts`
-3. Replace regular `git` command with `fgit`:
+- Use `git`, replacing URL with `fgit`:
 
-   ```sh
-   fgit clone https://github.com/FastGitORG/fgit-deno
-   ```
+  ```sh
+  git clone $(fgit https://github.com/FastGitORG/fgit-deno)
+  ```
 
-   or pass a URL directly to download a file using `curl` (you can use any `curl` arguments)
+  You can easily write a wrapper function:
 
-   ```sh
-   fgit https://github.com/cli/cli/releases/download/v0.12.0/gh_0.12.0_linux_amd64.tar.gz
-   ```
+  ```sh
+  # git clone with FastGit
+  fgcl () {
+     git clone $(fgit $1)
+  }
+  ```
+
+  Then use it like `fgcl https://github.com/FastGitORG/fgit-deno`.
+
+- Use `curl`, replacing URL with `fgit`:
+
+  ```sh
+  curl -L -O $(fgit https://github.com/cli/cli/releases/download/v0.12.0/gh_0.12.0_linux_amd64.tar.gz)
+  ```

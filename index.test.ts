@@ -1,5 +1,5 @@
-import { assertEquals } from './deps.ts'
-import { replace } from './utils.ts'
+import { assertEquals } from 'https://deno.land/std@0.85.0/testing/asserts.ts'
+import { replace } from './index.ts'
 
 Deno.test('Archive', () => {
   assertEquals(
