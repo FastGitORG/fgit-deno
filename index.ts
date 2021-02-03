@@ -47,4 +47,4 @@ export const replace = (raw: string) => {
 
 if (import.meta.main)
   for (const arg of Deno.args)
-    Deno.stdout.writeSync(new TextEncoder().encode(replace(arg)))
+    Deno.stdout.writeSync(new TextEncoder().encode(`${replace(arg)}\n`))
